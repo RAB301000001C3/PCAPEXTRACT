@@ -1,0 +1,97 @@
+#!/bin/bash
+
+. ./pcapextrfunc
+
+banner lolcat
+
+figlet -f smslant -c "     Packet Analysis on Steroids" | lolcat
+
+
+file="file"
+date=$(date +%y%m%d)
+dir=$(pwd)
+usr=$(whoami)
+
+cp $dir/pcapextract.zip /home/$usr/.config/wireshark/profiles/
+
+for i in "$dir"/*.pcap
+do
+  pcap="$i"
+  echo "***********************************************************************************************"
+  echo " "
+  echo -e " \t Creating directory for: ${pcap##*/} "
+  sleep .5
+  mkdir $i.$date
+  echo -e " \t Status: Successful!"
+  echo -e " \t Copying file ${pcap##*/} to ${pcap##*/}.$date directory"
+  sleep 1
+  echo " "
+   echo "***********************************************************************************************"
+  cp ${pcap##*/} $pcap.$date
+   if [ -n "$pcap.$date/*" ] ; then
+    echo
+    echo -e "\t PCAP File found: ${pcap##*/} "
+    if [ -n $dir ] ; then
+     echo -e "\t ANALYZING ${pcap##*/} FILE ..."
+     sleep .5
+     echo -e "\t Processing... "
+     sleep .5
+     tshark -t ad -r ${pcap##*/} -Y 'http.user_agent contains "curl" and http.request.method == GET' > ${pcap##*/}.$date/${pcap##*/}.$date.GET.txt
+     echo "********************************** " >> ${pcap##*/}.$date/${pcap##*/}.$date.GET.txt
+     tshark -t ad -r ${pcap##*/} -Y 'http.request.method == GET' >> ${pcap##*/}.$date/${pcap##*/}.$date.GET.txt
+     tshark -t ad -r ${pcap##*/} -Y "http" > ${pcap##*/}.$date/${pcap##*/}.$date.HTTP.txt
+     tshark -Q -r ${pcap##*/} --export-objects http,${pcap##*/}.$date/${pcap##*/}.$date.EXPORT
+     tshark -r ${pcap##*/} -T fields -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport | sort -t: -u -k1,1 > ${pcap##*/}.$date/${pcap##*/}.$date.IP_PORTS.txt
+     echo -e "\t Status: Extraction Complete"
+     echo -e "\t Extracting IP ADDRESSES"
+     grep -ohE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ${pcap##*/}.$date/${pcap##*/}.$date.*.txt | sort -t: -u -k1,1 | gawk 'BEGIN {print "SORTED IP ADDRESSES \n"} {print $0}' > ${pcap##*/}.$date/${pcap##*/}.$date.IPSORTED.txt
+     echo
+     echo "**************************** Extracting IP Address(es) found: View full extracted IP Addresses at ${pcap##*/}.$date directory **************************** "
+     sleep .5
+     head -n1 ${pcap##*/}.$date/${pcap##*/}.$date.IPSORTED.txt | tail -n8 ${pcap##*/}.$date/${pcap##*/}.$date.IPSORTED.txt
+     echo "***********************************************************************************************"
+     echo " "
+     echo -e "\t Extracting Domain Names Found: View full extracted domains at ${pcap##*/}.$date directory"
+     tshark -t ad -r ${pcap##*/} -Y 'udp.port == 53' > ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_Raw.txt
+     cat ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_Raw.txt | dnsfilter > ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_Filtered.txt
+     cat ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_Filtered.txt | head -n10 2> /dev/null
+     sleep .5
+     rm ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_Raw.txt
+     tshark -r ${pcap##*/} -T fields -e ip.src -e dns.qry.name -2R "dns.flags.response eq 0" | awk -F" " '{ print $2 }' | sort -u 2> /dev/null 1> ${pcap##*/}.$date/${pcap##*/}.$date.Domain_Names_LIST.txt
+     echo " "
+     echo "***********************************************************************************************"
+     echo " "
+     echo -e "\t Extracting Host Names Found: View full extracted Hostnames at ${pcap##*/}.$date directory"
+     sleep .5
+     tshark -t ad -r ${pcap##*/} -Y "kerberos.CNameString" | awk -F" " '{ print $1,$2,$3,$4,$5,$6,$9}' | cname > ${pcap##*/}.$date/${pcap##*/}.$date.HOSTNAMES.txt 
+     sleep .5
+     head -n5 ${pcap##*/}.$date/${pcap##*/}.$date.HOSTNAMES.txt 
+     echo 
+     echo "***********************************************************************************************"
+     echo
+      z="${pcap##*/}.$date/${pcap##*/}.$date.EXPORT"
+      pdf=$(find $dir -name *.pdf)
+      if [ -n $z ]
+      then
+       cd $z
+  	   echo -e "\t Extracting Hash Values"
+  	   sleep .5
+  	   echo -e "\t Status: Successful! "
+  	   sleep .5
+  	   echo -e "\t Printing..."
+  	   sleep 2
+  	   echo " "
+   	   hash | sed 'N;s/\n/ /'
+   	   cd $dir  	 
+   	   echo " "
+      else
+       echo "Export Directory is empty"
+      fi
+    else 
+      echo "No GET method found"
+    fi
+   else 
+    echo "empty"
+   fi
+
+done 
