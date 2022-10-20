@@ -12,7 +12,7 @@ date=$(date +%y%m%d)
 dir=$(pwd)
 usr=$(whoami)
 
-cp $dir/pcapextract.zip /home/$usr/.config/wireshark/profiles/
+mkdir -p /home/$usr/.config/wireshark/profiles/pcapextract && cp $dir/pcapextract.zip /home/$usr/.config/wireshark/profiles/pcapextract
 
 for i in "$dir"/*.pcap
 do
