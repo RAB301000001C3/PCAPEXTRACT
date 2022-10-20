@@ -63,7 +63,7 @@ do
      echo " "
      echo -e "\t Extracting Host Names Found: View full extracted Hostnames at ${pcap##*/}.$date directory"
      sleep .5
-     tshark -t ad -r ${pcap##*/} -Y "kerberos.CNameString" | awk -F" " '{ print $1,$2,$3,$4,$5,$6,$9}' | cname > ${pcap##*/}.$date/${pcap##*/}.$date.HOSTNAMES.txt 
+     tshark -t ad -r ${pcap##*/} -C pcapextract -Y "kerberos.CNameString" | awk -F" " '{ print $1,$2,$3,$4,$5,$6,$9}' | cname > ${pcap##*/}.$date/${pcap##*/}.$date.HOSTNAMES.txt 
      sleep .5
      head -n5 ${pcap##*/}.$date/${pcap##*/}.$date.HOSTNAMES.txt 
      echo 
