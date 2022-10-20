@@ -35,7 +35,7 @@ For information or requests, contact:
 RAB301000001C3
 
 Web: https://eyehatemalwares.com
-Email: andradarenmarc [at] gmail [dot] comm
+Email: eyehatemalwares[at]gmail[dot]com
 
 ********************************************************************************
 Bugs and Support
