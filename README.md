@@ -2,6 +2,8 @@
 	RAB301000001C3 - PCAP EXTRACT: Packet Analysis On Steroids
 ********************************************************************************
 
+![pcapextract](https://user-images.githubusercontent.com/85085158/196837511-4282ddf1-d8fb-4ec1-9fc4-48a1768a1428.png)
+
 PCAP EXTRACT is a Linux-based network artifacts extraction tool, implemented 
 using shell script combined with cli-based network packet analysis tool tshark 
 filters for extracting of packet artifacts such as IP Addresses, domain names
@@ -51,4 +53,3 @@ PCAP EXTRACT is a free tool; you can redistribute it and modify it which suits
 your needed during engagement.
 
 ********************************************************************************
-![pcapextract](https://user-images.githubusercontent.com/85085158/196837511-4282ddf1-d8fb-4ec1-9fc4-48a1768a1428.png)
