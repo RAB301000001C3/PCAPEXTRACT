@@ -1,4 +1,5 @@
 # The following packages are required for the tool functionality
+# Install by executing the following script
 
 tshark && wireshark
  sudo add-apt-repository -y ppa:wireshark-dev/stable
