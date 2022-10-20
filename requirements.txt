@@ -6,7 +6,7 @@ tshark && wireshark
  sudo apt install -y tshark
  sudo apt-get install wireshark
 
-# Install Figlet and Lolcat
+# Install figlet and Lolcat
 
 figlet:
   sudo apt install figlet lolcat
