@@ -19,7 +19,7 @@ current working directory.
 ************************Guide on how to use the tool****************************
 
 	A. Create a directory where the PCAPEXTRACT.zip file will be extracted
-	B. Allow execution on tool by running: sudo chmod +x pcapextract
+	B. Allow execution on tool by running: chmod +x pcapextract
 	C. Execute the tool by running: ./pcapextract
 	D. wait and see the magic ;)
 	E. All the output will be saved as a .txt file
