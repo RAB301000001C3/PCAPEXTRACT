@@ -1,0 +1,65 @@
+#!/bin/bash
+
+function hash {
+local dir=$(pwd)
+
+for i in "$dir"/*.* ; do
+
+ file="$i"
+ 
+ if [ -f $i ] ; then
+   echo "${file##*/} : "
+   sha256sum $i | gawk '{print $1}'
+ else
+   echo "nothing" > /dev/null
+ fi
+done
+}
+
+function dnsfilter {
+
+gawk 'BEGIN {
+print " "
+print "No. \t  Time \t \t \t \t   IP.SRC \t IP.DEST \t DNS.QRY"
+print "        \t         "
+}
+{
+print $1 "        " $2 " " $3 "      " $4 "  " $5 "  " $6 "      " $13 
+} '
+
+}
+
+function cname {
+
+gawk 'BEGIN {
+print " "
+print "No. \t  Time \t \t \t \t    IP.SRC \t   IP.DST \t   CName.String"
+print "		\t 	    "
+}
+{
+print $1 "      " $2 " " $3 "        " $4 "  " $5 "  " $6 "       " $7
+} '
+}
+
+function ip {
+
+gawk 'BEGIN {
+print " "
+print "IP ADDRESS"
+print $0
+}'
+}
+
+
+function banner {
+echo " "	
+echo " "	
+echo "  ██████╗  ██████╗ █████╗ ██████╗     ███████╗██╗  ██╗████████╗██████╗  █████╗  ██████╗████████╗ "
+echo "  ██╔══██╗██╔════╝██╔══██╗██╔══██╗    ██╔════╝╚██╗██╔╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝╚══██╔══╝ "
+echo "  ██████╔╝██║     ███████║██████╔╝    █████╗   ╚███╔╝    ██║   ██████╔╝███████║██║        ██║    "
+echo "  ██╔═══╝ ██║     ██╔══██║██╔═══╝     ██╔══╝   ██╔██╗    ██║   ██╔══██╗██╔══██║██║        ██║    "
+echo "  ██║     ╚██████╗██║  ██║██║         ███████╗██╔╝ ██╗   ██║   ██║  ██║██║  ██║╚██████╗   ██║    "
+echo "  ╚═╝      ╚═════╝╚═╝  ╚═╝╚═╝         ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝   ╚═╝    "
+echo " "
+}                                                    
+

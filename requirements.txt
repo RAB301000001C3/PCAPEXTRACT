@@ -1,0 +1,11 @@
+# The following packages are required for the tool functionality
+
+tshark && wireshark
+ sudo add-apt-repository -y ppa:wireshark-dev/stable
+ sudo apt install -y tshark
+ sudo apt-get install wireshark
+
+# Install Figlet and Lolcat
+
+figlet:
+  sudo apt install figlet lolcat
