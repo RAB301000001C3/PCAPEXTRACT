@@ -6,7 +6,7 @@
 
 PCAP EXTRACT is a Linux-based network artifacts extraction tool, implemented 
 using shell script combined with cli-based network packet analysis tool tshark 
-filters for extracting of packet artifacts such as IP Addresses, domain names
+filters for extracting packet artifacts such as IP Addresses, domain names
 and many more. This tool intends to analyze multiple packet captures in a 
 single  execution without looking at the Graphical Interface tool like wireshark.
 
