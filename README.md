@@ -48,6 +48,6 @@ https://github.com/RAB301000001C3/PCAPEXTRACT/issues
 Licensing and Copyright
 
 PCAP EXTRACT is a free tool; you can redistribute it and modify it which suits 
-your needed during engagement
+your needed during engagement.
 
 ********************************************************************************
